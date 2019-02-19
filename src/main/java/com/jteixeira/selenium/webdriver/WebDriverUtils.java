@@ -43,10 +43,12 @@ public class WebDriverUtils {
 		wait.until(pageLoadCondition);
 	}
 
-	public static void tirarPrintESalvar(String palavraChave, WebDriver driver) throws IOException {
+	public static String tirarPrintESalvar(String palavraChave, WebDriver driver) throws IOException {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(scrFile, new File(System.getProperty("user.dir") + SCREENSHOT_DIR
-				+ substituirCaracteresEspeciais(palavraChave) + EXTENSION));
+		String fileDir = System.getProperty("user.dir") + SCREENSHOT_DIR + substituirCaracteresEspeciais(palavraChave)
+				+ EXTENSION;
+		FileUtils.copyFile(scrFile, new File(fileDir));
+		return fileDir;
 	}
 
 	public static String substituirCaracteresEspeciais(String stringToReplace) {
