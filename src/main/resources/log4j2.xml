@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+			%-5p [App: TESTE COM SELENIUM] %d{ddMMyyyy HH:mm:ss.SSS} [%t] %X{callId}  %m%n
+		</Property>
+	</Properties>
+	<Appenders>
+	    <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+		<RollingFile name="fileAppender" fileName="/app/logs/teste-selenium/teste-selenium-${date:dd-MM-yyyy}.log" 
+			filePattern="/app/logs/teste-selenium/teste-selenium-%d{dd-MM-yyyy-HH}-%i.log">
+			<PatternLayout>
+				<Pattern>${LOG_PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10MB" />
+				<TimeBasedTriggeringPolicy interval="8" modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+	</Appenders>
+
+
+	<Loggers>
+		<Root level="info"> 
+			<AppenderRef ref="ConsoleAppender"/>
+		    <AppenderRef ref="fileAppender" />
+		</Root>
+	</Loggers>
+</Configuration>

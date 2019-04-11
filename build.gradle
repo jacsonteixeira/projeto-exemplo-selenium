@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -64,5 +65,8 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox
 	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.2'
+	
+	// https://mvnrepository.com/artifact/org.aspectj/aspectjtools
+	compile group: 'org.aspectj', name: 'aspectjtools', version: '1.6.2'
 	
 }

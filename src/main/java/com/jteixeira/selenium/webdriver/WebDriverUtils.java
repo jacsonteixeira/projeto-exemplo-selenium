@@ -14,44 +14,44 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverUtils {
 
-	final static String DRIVERS_DIR = "/src/main/resources/drivers/";
+	private WebDriverUtils() {
+	}
 
-	final static String CHROME_DRIVER_EXE = "chromedriver.exe";
+	static final String DRIVERS_DIR = "/src/main/resources/drivers/";
 
-	final static String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
+	static final String CHROME_DRIVER_EXE = "chromedriver.exe";
 
-	final static String SCREENSHOT_DIR = "/src/main/resources/screenshots/";
+	static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
 
-	final static String EXTENSION = ".png";
+	static final String SCREENSHOT_DIR = "/src/main/resources/screenshots/";
 
-	public static WebDriver criaConexaoWebDriverChrome(Boolean telaMaximizada) {
+	static final String EXTENSION = ".png";
+
+	public static WebDriver createConnectionWebDriverChrome(Boolean fullScreen) {
 
 		System.setProperty(CHROME_DRIVER_PROPERTY, System.getProperty("user.dir") + DRIVERS_DIR + CHROME_DRIVER_EXE);
 		WebDriver driver = new ChromeDriver();
-		if (telaMaximizada)
+		if (fullScreen)
 			driver.manage().window().maximize();
 		return driver;
 	}
 
-	public static void esperarCarregarPagina(WebDriver driver) {
-		ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
-			public Boolean apply(WebDriver driver) {
-				return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
-			}
-		};
+	public static void waitForPageLoad(WebDriver driver) {
+		ExpectedCondition<Boolean> pageLoadCondition = n -> ((JavascriptExecutor) driver)
+				.executeScript("return document.readyState").equals("complete");
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(pageLoadCondition);
 	}
 
-	public static String tirarPrintESalvar(String palavraChave, WebDriver driver) throws IOException {
+	public static String takePrintAndSave(String keyWord, WebDriver driver) throws IOException {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String fileDir = System.getProperty("user.dir") + SCREENSHOT_DIR + substituirCaracteresEspeciais(palavraChave)
+		String fileDir = System.getProperty("user.dir") + SCREENSHOT_DIR + substruingSpecialCaracteres(keyWord)
 				+ EXTENSION;
 		FileUtils.copyFile(scrFile, new File(fileDir));
 		return fileDir;
 	}
 
-	public static String substituirCaracteresEspeciais(String stringToReplace) {
+	public static String substruingSpecialCaracteres(String stringToReplace) {
 		return stringToReplace.replaceAll("[^a-zA-Z0-9]", "_");
 	}
 

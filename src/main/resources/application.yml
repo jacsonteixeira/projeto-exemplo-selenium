@@ -1,0 +1,4 @@
+log:
+  selenium:
+    all:
+      method: true
